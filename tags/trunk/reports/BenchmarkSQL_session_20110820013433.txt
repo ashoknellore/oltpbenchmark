@@ -1,0 +1,33 @@
+Number of Terminals	20
+
+Terminal	Home Warehouse
+Term-w1d1-5	1
+Term-w1d6-10	1
+Term-w2d1-5	2
+Term-w2d6-10	2
+Term-w3d1-5	3
+Term-w3d6-10	3
+Term-w4d1-5	4
+Term-w4d6-10	4
+Term-w5d1-5	5
+Term-w5d6-10	5
+Term-w6d1-5	6
+Term-w6d6-10	6
+Term-w7d1-5	7
+Term-w7d6-10	7
+Term-w8d1-5	8
+Term-w8d6-10	8
+Term-w9d1-5	9
+Term-w9d6-10	9
+Term-w10d1-5	10
+Term-w10d6-10	10
+
+Transaction	Weight
+% New-Order	45
+% Payment	43
+% Order-Status	4
+% Delivery	4
+% Stock-Level	4
+
+
+Transaction Number	Terminal	Type	Execution Time (ms)		Comment

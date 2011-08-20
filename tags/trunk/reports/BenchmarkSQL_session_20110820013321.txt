@@ -1,0 +1,15 @@
+Number of Terminals	2
+
+Terminal	Home Warehouse
+Term-w5d1-10	5
+Term-w10d1-10	10
+
+Transaction	Weight
+% New-Order	45
+% Payment	43
+% Order-Status	4
+% Delivery	4
+% Stock-Level	4
+
+
+Transaction Number	Terminal	Type	Execution Time (ms)		Comment
