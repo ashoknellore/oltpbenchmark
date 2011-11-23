@@ -1,0 +1,8 @@
+#labels Featured,publications
+In this page we list papers that have used this benchmark (or some earlier version of it).
+
+ * Carlo Curino, Yang Zhang, Evan P. C. Jones, Samuel Madden: Schism: a Workload-Driven Approach to Database Replication and Partitioning. PVLDB 3(1): 48-57 (2010)
+ * Carlo Curino, Evan P. C. Jones, Raluca A. Popa, Nirmesh Malviya, Eugene Wu, Samuel Madden, Hari Balakrishnan, Nickolai Zeldovich: Relational Cloud: a Database Service for the cloud. CIDR 2011: 235-240
+ * Raluca A. Popa, Catherine M. S. Redfield, Nickolai Zeldovich, Hari Balakrishnan: CryptDB: protecting confidentiality with encrypted query processing. SOSP 2011: 85-100
+ * Aubrey L. Tatarowicz, Carlo Curino, Evan P. C. Jones Sam Madden, Lookup Tables: Fine-Grained Partitioning for Distributed Databases,  ICDE 2012
+ 
