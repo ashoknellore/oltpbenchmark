@@ -2,20 +2,6 @@
 In this wiki page we briefly describe the nature of each of the benchmarks we included in our suite. 
 
 
-
-
-
-
-
-= YCSB =
-The Yahoo! Cloud Serving Benchmark (YCSB) is a collection of simple micro-benchmarks designed to represent data management applications that are simple, but that require high scalability:
-
-_B. F. Cooper, A. Silberstein, E. Tam, R. Ramakrishnan, and R. Sears. Benchmarking cloud serving systems with ycsb. SoCC, 2010._
-
-This benchmark is designed to evaluate distributed key/value storage systems, such as those created by Yahoo, Google and various open source projects. In this work, the benchmark is used to pro- vide insight in some of the capabilities of our tool, e.g., its ability fall back to cheaper partitioning strategies in case of a tie, on a standardized and simple test case.
-
-While YCSB is open source and available at: https://github.com/brianfrankcooper/YCSB/wiki/ we provide a reimplementation that uses the rest of our driving framework, for the ease of use. 
-
 = Wikipedia =
 For wikipedia all data, schema, and queries are available since the project is open-source. We extracted the most popular operations and computed from all available information (including various interactions with the DBAs of the Wikimedia foundation) the relative frequencies of use. 
 The workload is based on an actual trace of user requests from Wikipedia from:
@@ -49,6 +35,16 @@ The Epinions.com schema contains four relations: users, items, reviews and trust
  * Q7. Insert/update the metadata of an item
  * Q8. Insert/update a review
  * Q9. Update the trust relation between two users
+
+
+= YCSB =
+The Yahoo! Cloud Serving Benchmark (YCSB) is a collection of simple micro-benchmarks designed to represent data management applications that are simple, but that require high scalability:
+
+_B. F. Cooper, A. Silberstein, E. Tam, R. Ramakrishnan, and R. Sears. Benchmarking cloud serving systems with ycsb. SoCC, 2010._
+
+This benchmark is designed to evaluate distributed key/value storage systems, such as those created by Yahoo, Google and various open source projects. In this work, the benchmark is used to pro- vide insight in some of the capabilities of our tool, e.g., its ability fall back to cheaper partitioning strategies in case of a tie, on a standardized and simple test case.
+
+While YCSB is open source and available at: https://github.com/brianfrankcooper/YCSB/wiki/ we provide a reimplementation that uses the rest of our driving framework, for the ease of use. 
 
 
 
