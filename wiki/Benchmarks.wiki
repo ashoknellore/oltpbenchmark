@@ -1,9 +1,9 @@
-#summary One-sentence summary of this page.
+#labels benchmarks,Featured
+#Description of the benchmarks currently available
 
 = Introduction =
 
-Add your content here.
-
+In this wiki page we briefly describe the nature of each of the benchmarks we included in our suite. 
 
 = Epinions =
 This benchmark is derived from the epinions.com product review website, we reconstructed some of the core operations performed on this website, and used actual data collected by:
@@ -20,6 +20,15 @@ The Epinions.com schema contains four relations: users, items, reviews and trust
  * Q9. Update the trust relation between two users
 
 = TPC-C =
-
-The TPC-C benchmark is designed to simulate the OLTP workload of an order processing system. The implementation we used does not strictly adhere to the requirements of the TPC-C specification. In particular, in order to generate high throughput with small dataset sizes, the client simulators do not use the specified “think times” and instead submits the next transaction as soon as it receives the response from the first. Thus, our results in Section 6.3 are not meant to be compared with other systems, but rather indicate the relative performance of the configurations we tested.
+The TPC-C benchmark is designed to simulate the OLTP workload of an order processing system. The implementation we used does not strictly adhere to the requirements of the TPC-C specification: http://tpc.org/tpcc/default.asp. In particular, in order to generate high throughput with small dataset sizes, the client simulators do not use the specified “think times” and instead submits the next transaction as soon as it receives the response from the first. Thus, our results in Section 6.3 are not meant to be compared with other systems, but rather indicate the relative performance of the configurations we tested.
 The TPC-C schema contains 9 tables with a total of 92 columns, 8 primary keys, and 9 foreign keys. TPC-C workload contains 5 types of transactions.
+
+
+= YCSB =
+The Yahoo! Cloud Serving Benchmark (YCSB) is a collection of simple micro-benchmarks designed to represent data management applications that are simple, but that require high scalability:
+
+B. F. Cooper, A. Silberstein, E. Tam, R. Ramakrishnan, and R. Sears. Benchmarking cloud serving systems with ycsb. SoCC, 2010.
+
+ This benchmark is designed to evaluate distributed key/value storage systems, such as those created by Yahoo, Google and various open source projects. In this work, the benchmark is used to pro- vide insight in some of the capabilities of our tool, e.g., its ability fall back to cheaper partitioning strategies in case of a tie, on a standardized and simple test case.
+
+While YCSB is open source and available at: https://github.com/brianfrankcooper/YCSB/wiki/ we provide a reimplementation that uses the rest of our driving framework, for the ease of use. 
