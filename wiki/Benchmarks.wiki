@@ -25,7 +25,7 @@ The Yahoo! Cloud Serving Benchmark (YCSB) is a collection of simple micro-benchm
 
 _B. F. Cooper, A. Silberstein, E. Tam, R. Ramakrishnan, and R. Sears. Benchmarking cloud serving systems with ycsb. SoCC, 2010._
 
- This benchmark is designed to evaluate distributed key/value storage systems, such as those created by Yahoo, Google and various open source projects. In this work, the benchmark is used to pro- vide insight in some of the capabilities of our tool, e.g., its ability fall back to cheaper partitioning strategies in case of a tie, on a standardized and simple test case.
+This benchmark is designed to evaluate distributed key/value storage systems, such as those created by Yahoo, Google and various open source projects. In this work, the benchmark is used to pro- vide insight in some of the capabilities of our tool, e.g., its ability fall back to cheaper partitioning strategies in case of a tie, on a standardized and simple test case.
 
 While YCSB is open source and available at: https://github.com/brianfrankcooper/YCSB/wiki/ we provide a reimplementation that uses the rest of our driving framework, for the ease of use. 
 
@@ -34,7 +34,7 @@ The Twitter benchmark is inspired by the popular micro-blogging website. In orde
 
 _M. Cha, H. Haddadi, F. Benevenuto, and K. P. Gummadi, “Measuring user influence in Twitter: The million follower fallacy,” in International Conference on Weblogs and Social Media (ICWSM), Washington DC, USA, May 2010_
 
- We replicate the follow relationship to support lookups in both directions by an indexed key in order to access more efficiently who is being followed as well as users who are following a given user. This is the way Twitter organizes their data, as of 2010. 
+We replicate the follow relationship to support lookups in both directions by an indexed key in order to access more efficiently who is being followed as well as users who are following a given user. This is the way Twitter organizes their data, as of 2010. 
 To simulate the application, we synthetically generated tweets and a query workload based on properties of the actual web site. Our read/write workload consists of the following operations: 1) insert a new tweet, 2) read a tweet by tweet id, 3) read the 20 most recent tweets of a certain user, 4) get the 100 most recent tweets of the people a user follows, and 5) get the names of the people that follow a user. Operations 4 and 5 are implemented via two separate queries. The result is a reasonable approximation of a few core features of Twitter. 
 
 = Wikipedia =
@@ -44,7 +44,6 @@ The workload is based on an actual trace of user requests from Wikipedia from:
 
 _G. Urdaneta, G. Pierre, and M. van Steen, “Wikipedia workload analysis for decentralized hosting,” Elsevier Computer Networks, vol. 53, no. 11, pp. 1830–1845, Jul. 2009. [Online]. Available: http://www.globule.org/publi/WWADH comnet2009.html _
 
-, from which we extracted the most common operation: fetch the current version of an article. This request involves three queries: select a page id (pid) by title, select the page and revision tuples by joining the page and revision on revision.page = page.pid and revision.rid = page.latest, then finally select the text matching the text id from the revision tuple. This operation is implemented as three separate queries even though it could be one because of changes in the software over time, MySQL- specific performance issues, and the various layers of caching outside the database that we do not model.
+From this we extracted the most common operation: fetch the current version of an article. This request involves three queries: select a page id (pid) by title, select the page and revision tuples by joining the page and revision on revision.page = page.pid and revision.rid = page.latest, then finally select the text matching the text id from the revision tuple. This operation is implemented as three separate queries even though it could be one because of changes in the software over time, MySQL- specific performance issues, and the various layers of caching outside the database that we do not model.
 
 We provide real data and real traces for wikipedia, since the entire Wikipedia and full trace are most likely to be "too much" for most intent and purposes we provide different samples of various sizes, extracted from a snapshot of English Wikipedia from January 2008 (the time corresponding to the trace we have). 
-
