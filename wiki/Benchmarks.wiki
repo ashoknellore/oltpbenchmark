@@ -1,0 +1,25 @@
+#summary One-sentence summary of this page.
+
+= Introduction =
+
+Add your content here.
+
+
+= Epinions =
+This benchmark is derived from the epinions.com product review website, we reconstructed some of the core operations performed on this website, and used actual data collected by:
+
+P. Massa and P. Avesani. Controversial users demand local trust metrics: an experimental study on epinions.com community. In AAAI’05, 2005.
+
+To provide a faithful interaction between users, and items. 
+The Epinions.com schema contains four relations: users, items, reviews and trust. The reviews relation represents an n-to-n relationship between users and items (capturing user reviews and ratings of items). The trust relation represents a n-to-n relationship between pairs of users indicating a unidirectional “trust” value. The data was obtained by Paolo Massa from the Epinions.com development team. Since no workload is provided, we created requests that approximate the functionality of the website:
+ * Q1. For a given user and item, retrieve ratings from trusted users Q2. Retrieve the list of users trusted by a given user
+ * Q3. Given an item, retrieve the weighted average of all ratings Q4. Given an item, obtain the 10 most popular reviews
+ * Q5. List the 10 most popular reviews of a user Q6. Insert/update the user profile
+ * Q7. Insert/update the metadata of an item
+ * Q8. Insert/update a review
+ * Q9. Update the trust relation between two users
+
+= TPC-C =
+
+The TPC-C benchmark is designed to simulate the OLTP workload of an order processing system. The implementation we used does not strictly adhere to the requirements of the TPC-C specification. In particular, in order to generate high throughput with small dataset sizes, the client simulators do not use the specified “think times” and instead submits the next transaction as soon as it receives the response from the first. Thus, our results in Section 6.3 are not meant to be compared with other systems, but rather indicate the relative performance of the configurations we tested.
+The TPC-C schema contains 9 tables with a total of 92 columns, 8 primary keys, and 9 foreign keys. TPC-C workload contains 5 types of transactions.
