@@ -7,7 +7,7 @@ For wikipedia all data, schema, and queries are available since the project is o
 The workload is based on an actual trace of user requests from Wikipedia from:
 
 
-_G. Urdaneta, G. Pierre, and M. van Steen, “Wikipedia workload analysis for decentralized hosting,” Elsevier Computer Networks, vol. 53, no. 11, pp. 1830–1845, Jul. 2009. [Online]. Available: http://www.globule.org/publi/WWADH comnet2009.html _
+_G. Urdaneta, G. Pierre, and M. van Steen, “Wikipedia workload analysis for decentralized hosting,” Elsevier Computer Networks, vol. 53, no. 11, pp. 1830–1845, Jul. 2009. [Online]. Available: http://www.globule.org/publi/WWADH_comnet2009.html _
 
 From this we extracted the most common operation: fetch the current version of an article. This request involves three queries: select a page id (pid) by title, select the page and revision tuples by joining the page and revision on revision.page = page.pid and revision.rid = page.latest, then finally select the text matching the text id from the revision tuple. This operation is implemented as three separate queries even though it could be one because of changes in the software over time, MySQL- specific performance issues, and the various layers of caching outside the database that we do not model.
 
