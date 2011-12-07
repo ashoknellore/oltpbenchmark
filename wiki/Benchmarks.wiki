@@ -63,3 +63,4 @@ The combination of this (and other) basic queries, and the ability of the framew
 = TATP = 
 = AuctionMark =
 = SEATS =
+= JAPB (Hibernate) =
