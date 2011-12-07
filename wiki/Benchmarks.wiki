@@ -64,3 +64,8 @@ The combination of this (and other) basic queries, and the ability of the framew
 = AuctionMark =
 = SEATS =
 = JAPB (Hibernate) =
+This is a simple port of: http://http://www.jpab.org/
+This is a comprehensive benchmark that compares the performance of different combinations of JPA providers and Database Management Systems (DBMS). It covers many JPA ORM providers (Hibernate, EclipseLink, OpenJPA and DataNucleus) and DBMS (MySQL, PostgreSQL, Derby, HSQLDB, H2, HSQLite) that are available in Java.
+
+The benchmark is published by ObjectDB Software Ltd., but it should be useful also for anyone that is interested only in RDBMS and ORM (and not in object databases).
+
