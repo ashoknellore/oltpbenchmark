@@ -34,13 +34,14 @@ Total time: 3 seconds
 
 = Running a Benchmark =
 
-To run !OltpBenchmark 2 information are required: 
+A utility script (./oltpbenchmark) is provided for running the system.
+To run !OltpBenchmark, two information are required: 
   * The target benchmark (tpcc, wikipedia .. ect) 
   * The workload descriptor file (samples provided under ./config)
 
-== Benchmarks ==
+== Target benchmarks ==
 
-A utility script (./oltpbenchmark) is provided for running the system. The list of supported benchmarks and options can be obtained using the --help option:
+The list of supported benchmarks and options can be obtained using the --help option:
 
 {{{
 Djellel$ ./oltpbenchmark --help
@@ -150,10 +151,10 @@ Using the -o file.out option one can dump the output into a file.
 
 == Example ==
 
-Finally, bellow is the output of running the wikipedia benchmark with the above descriptor, the database being preloaded.
+Finally, bellow is the output of running the wikipedia benchmark with the above descriptor (the database being pre-exisiting).
 
 {{{
-Djellel$./oltpbenchmark -b wikipedia -c config/sample_wiki_config.xml --execute -s 5 -o out.txt
+Djellel$./oltpbenchmark -b wikipedia -c config/sample_wiki_config.xml --execute -s 5
 **********************************************************************************
 [INIT] Configuration file: config/sample_wiki_config.xml
 [INIT] Driver = com.mysql.jdbc.Driver
