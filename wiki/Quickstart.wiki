@@ -1,5 +1,4 @@
-#A guide to get you started with OltpBenchmark
-
+#labels Gettingstarted
 = Introduction =
 
 Add your content here.
