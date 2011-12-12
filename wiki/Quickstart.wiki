@@ -1,0 +1,57 @@
+#A guide to get you started with OltpBenchmark
+
+= Introduction =
+
+Add your content here.
+
+= Getting OltpBenchmark from SVN =
+
+First obtain the source code from the svn repository 
+{{{
+svn checkout http://oltpbenchmark.googlecode.com/svn/trunk/ oltpbenchmark-read-only
+}}}
+
+The next step is to compile OltpBenchmark, we provide an Apache Ant script to automatically build the system from the source code:
+{{{
+diufmac39:boltp Djellel$ ant
+Buildfile: /Users/Djellel/repositories/boltp/build.xml
+
+build:
+     [echo] benchmark: /Users/Djellel/repositories/boltp/build.xml
+    [mkdir] Created dir: /Users/Djellel/repositories/boltp/build/META-INF
+     [copy] Copying 1 file to /Users/Djellel/repositories/boltp/build/META-INF
+    [javac] Compiling 150 source files to /Users/Djellel/repositories/boltp/build
+    [javac] Note: Some input files use or override a deprecated API.
+    [javac] Note: Recompile with -Xlint:deprecation for details.
+    [javac] Note: Some input files use unchecked or unsafe operations.
+    [javac] Note: Recompile with -Xlint:unchecked for details.
+     [copy] Copying 8 files to /Users/Djellel/repositories/boltp/build
+
+BUILD SUCCESSFUL
+Total time: 3 seconds
+}}}
+
+= Running a Benchmark =
+
+To obtain the list of bechmarks implemented and the complete list of options, run the utility script with --help option:
+
+{{{
+diufmac39:boltp Djellel$ ./oltpbenchmark --help
+usage: oltpbenchmark
+ -b,--bench <arg>    [required] Benchmark class. Currently supported:
+                     [tpcc, tatp, wikipedia, resourcestresser, twitter,
+                     epinions, ycsb, jpab]
+ -c,--config <arg>   [required] Workload configuration file
+    --create         Initialize the database for this benchmark
+    --execute        Execute the benchmark workload
+ -h,--help           Print this help
+    --load           Load data using the benchmark's data loader
+ -o,--output <arg>   Output file (default System.out)
+ -s,--sample <arg>   Sampling window
+ -v,--verbose        Display Messages
+}}}
+
+The following command for example initiate a wikipedia database (--create and --load synthetic dataset) and a then run a workload as described in config/sample_wiki_config.xml file. The results (latency, throughput) are summarized into 5seconds buckets (-s 5) and the output is written into out.txt (-o out.txt):
+{{{
+./oltpbenchmark -b wikipedia -c config/sample_wiki_config.xml --create --load --execute -s 5 -o out.txt
+}}}
