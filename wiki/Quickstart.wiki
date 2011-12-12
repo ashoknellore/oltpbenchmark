@@ -31,7 +31,12 @@ BUILD SUCCESSFUL
 Total time: 3 seconds
 }}}
 
-To run wikipedia with the three steps (create, load, execute):
+To run wikipedia with the three steps (create, load):
 {{{
-./oltpbenchmark -b wikipedia -c config/sample_wiki_config.xml -create -load -execute -s 5
+./oltpbenchmark -b wikipedia -c config/sample_wiki_config.xml -create -load
+}}}
+
+To execute:
+{{{
+./oltpbenchmark -b wikipedia -c config/sample_wiki_config.xml -execute -s 5
 }}}
