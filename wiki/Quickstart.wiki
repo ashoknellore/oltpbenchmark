@@ -1,30 +1,30 @@
 #labels Gettingstarted
 = Introduction =
 
-Add your content here.
+OltpBenchmark is a modular, extensible and configurable OLTP benchmarking tool. The following is a quick guide to get you started with synthetic data and sample workload mixes. 
 
 = Getting OltpBenchmark from SVN =
 
-First obtain the source code from the svn repository 
+First of all obtain the source code from the svn repository 
 {{{
-svn checkout http://oltpbenchmark.googlecode.com/svn/trunk/ oltpbenchmark-read-only
+svn checkout http://oltpbenchmark.googlecode.com/svn/trunk/ oltpbenchmark
 }}}
 
-The next step is to compile OltpBenchmark, we provide an Apache Ant script to automatically build the system from the source code:
+The next step is to compile OltpBenchmark; we provide an Apache Ant script to automatically build the system from the source code:
 {{{
-diufmac39:boltp Djellel$ ant
+Djellel$ ant
 Buildfile: /Users/Djellel/repositories/boltp/build.xml
 
 build:
-     [echo] benchmark: /Users/Djellel/repositories/boltp/build.xml
-    [mkdir] Created dir: /Users/Djellel/repositories/boltp/build/META-INF
-     [copy] Copying 1 file to /Users/Djellel/repositories/boltp/build/META-INF
-    [javac] Compiling 150 source files to /Users/Djellel/repositories/boltp/build
+     [echo] benchmark: /Users/Djellel/repositories/oltpbenchmark/build.xml
+    [mkdir] Created dir: /Users/Djellel/repositories/oltpbenchmark/build/META-INF
+     [copy] Copying 1 file to /Users/Djellel/repositories/oltpbenchmark/build/META-INF
+    [javac] Compiling 150 source files to /Users/Djellel/repositories/oltpbenchmark/build
     [javac] Note: Some input files use or override a deprecated API.
     [javac] Note: Recompile with -Xlint:deprecation for details.
     [javac] Note: Some input files use unchecked or unsafe operations.
     [javac] Note: Recompile with -Xlint:unchecked for details.
-     [copy] Copying 8 files to /Users/Djellel/repositories/boltp/build
+     [copy] Copying 8 files to /Users/Djellel/repositories/oltpbenchmark/build
 
 BUILD SUCCESSFUL
 Total time: 3 seconds
@@ -32,10 +32,16 @@ Total time: 3 seconds
 
 = Running a Benchmark =
 
-To obtain the list of bechmarks implemented and the complete list of options, run the utility script with --help option:
+To run OltpBenchmark 2 information are required: 
+  * The target benchmark (tpcc, wikipedia .. ect) 
+  * The workload descriptor file (samples provided under ./config)
+
+== Benchmarks ==
+
+We provide a utility script (./oltpbenchmark) for running the system and a list of supported benchmarks and options can be obtained using the --help option:
 
 {{{
-diufmac39:boltp Djellel$ ./oltpbenchmark --help
+Djellel$ ./oltpbenchmark --help
 usage: oltpbenchmark
  -b,--bench <arg>    [required] Benchmark class. Currently supported:
                      [tpcc, tatp, wikipedia, resourcestresser, twitter,
@@ -44,13 +50,124 @@ usage: oltpbenchmark
     --create         Initialize the database for this benchmark
     --execute        Execute the benchmark workload
  -h,--help           Print this help
-    --load           Load data using the benchmark's data loader
+    --load           Load data using the benchmarks data loader
  -o,--output <arg>   Output file (default System.out)
  -s,--sample <arg>   Sampling window
  -v,--verbose        Display Messages
 }}}
 
-The following command for example initiate a wikipedia database (--create and --load synthetic dataset) and a then run a workload as described in config/sample_wiki_config.xml file. The results (latency, throughput) are summarized into 5seconds buckets (-s 5) and the output is written into out.txt (-o out.txt):
+About every implemented benchmark comes with a data generator that creates and loads the target database with synthetic data that mimics, to the best, real world datasets.
+
+*Example*
+The following command for example initiate a synthetic wikipedia database (--create --load) and a then run a workload as described in config/sample_wiki_config.xml file. The results (latency, throughput) are summarized into 5seconds buckets (-s 5) and the output is written into out.txt (-o out.txt):
 {{{
 ./oltpbenchmark -b wikipedia -c config/sample_wiki_config.xml --create --load --execute -s 5 -o out.txt
 }}}
+
+== Workload descriptor ==
+
+OltpBenchmark uses a configuration file to drive a given benchmark. The workload descriptor (or configuration file) provide the general information to access the database (driver, URL, credential .. etc), benchmark specific options and most importantly the workload mix.
+
+When running a multi-phase experiment with varying a workload, one should provide multiple _<work>_ sections with their duration, rate, and the weight of each transaction. Note: weights have to sum up to 100%.
+The transactions are listed in the benchmark specific section _<transactiontypes>_. The order in which the transactions are declared is the same as their respective weights.
+
+*Example*
+The following is an example of a wikipedia configuration file.
+{{{
+<?xml version="1.0"?>
+<parameters>
+   
+    <!-- General Workload configuration -->
+    <driver>com.mysql.jdbc.Driver</driver>
+    <DBUrl>jdbc:mysql://127.0.0.1:3306/wiki</DBUrl>
+    <DBName>wiki</DBName>
+    <username>wiki</username>
+    <password>wikipass</password>
+    <terminals>10</terminals>
+
+    <works>
+        <work>
+          <time>10</time>
+          <rate>200</rate>
+          <weights>0.07,0.07,7.6725,91.2656,0.9219</weights>
+        </work>
+        <work>
+          <time>5</time>
+          <rate>200</rate>
+          <weights>0.07,0.07,7.6725,91.2656,0.9219</weights>
+        </work>
+    </works>
+    
+    <!-- Wikipedia specific -->
+    <tracefile>config/traces/longtrace_1k.txt</tracefile>
+    <base_ip>10.1.</base_ip>
+    <transactiontypes>
+        <transactiontype>
+                <name>AddWatchList</name>
+        </transactiontype>
+        <transactiontype>
+                <name>RemoveWatchList</name>
+        </transactiontype>
+        <transactiontype>
+                <name>UpdatePage</name>
+        </transactiontype>
+        <transactiontype>
+                <name>GetPageAnonymous</name>
+        </transactiontype>
+        <transactiontype>
+                <name>GetPageAuthenticated</name>
+        </transactiontype>
+    </transactiontypes>
+</parameters>
+}}}
+
+== Output ==
+
+The raw output is a listing of start time (in java microseconds) and duration (micro seconds) for each transaction type.
+*Example*
+{{{
+transaction type (index in config file), start time (microseconds),latency (microseconds)
+3,1323686190.045091,8677
+4,1323686190.050116,6800
+4,1323686190.055146,3221
+3,1323686190.060193,1459
+4,1323686190.065246,2476
+4,1323686190.070348,1834
+4,1323686190.075342,1904
+}}}
+
+To obtain transaction per second count, you can aggregate the results into windows using -s option. The throughput and different latency measures in milliseconds are reported:
+{{{
+time (seconds),throughput (requests/s),average,min,25th,median,75th,90th,95th,99th,max
+0,200.200,1.183,0.585,0.945,1.090,1.266,1.516,1.715,2.316,12.656
+5,199.800,0.994,0.575,0.831,0.964,1.071,1.209,1.424,2.223,2.657
+10,200.000,0.984,0.550,0.796,0.909,1.029,1.191,1.357,2.024,35.835
+}}}
+
+Using the -o file.out option one can dump the output into a file.
+
+== Example ==
+
+Finally, bellow is the output of running the wikipedia benchmark with the above descriptor, the database being preloaded.
+
+{{{
+Djellel$./oltpbenchmark -b wikipedia -c config/sample_wiki_config.xml --execute -s 5 -o out.txt
+**********************************************************************************
+[INIT] Configuration file: config/sample_wiki_config.xml
+[INIT] Driver = com.mysql.jdbc.Driver
+[INIT] DB = jdbc:mysql://127.0.0.1:3306/wiki
+[INIT] Isolation mode = **Not Specified**
+[INIT] No dialect provided
+[INIT] Benchmark: wikipedia {Class: com.oltpbenchmark.benchmarks.wikipedia.WikipediaBenchmark}
+**********************************************************************************
+11:41:03,364 [main] (DBWorkload.java:262) INFO  - Launching the wikipedia Benchmark with 2 Phases...
+[Starting Phase] [Time= 10] [Rate= 200] [Ratios= [0.07, 0.07, 7.6725, 91.2656, 0.9219]]
+[Starting Phase] [Time= 5] [Rate= 200] [Ratios= [0.07, 0.07, 7.6725, 91.2656, 0.9219]]
+**********************************************************************************
+Rate limited reqs/s: Results(nanoSeconds=15000378000, measuredRequests=4499) = 299.9257752037982 requests/sec
+**********************************************************************************
+[Results] Grouped into Buckets of 5 seconds
+time (seconds),throughput (requests/s),average,min,25th,median,75th,90th,95th,99th,max
+0,200.200,1.183,0.585,0.945,1.090,1.266,1.516,1.715,2.316,12.656
+5,199.800,0.994,0.575,0.831,0.964,1.071,1.209,1.424,2.223,2.657
+10,200.000,0.984,0.550,0.796,0.909,1.029,1.191,1.357,2.024,35.835
