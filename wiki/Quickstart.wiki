@@ -1,16 +1,18 @@
 #labels Gettingstarted
+<wiki:toc max_depth="2" />
+
 = Introduction =
 
-OltpBenchmark is a modular, extensible and configurable OLTP benchmarking tool. The following is a quick guide to get you started with synthetic data and sample workload mixes. 
+!OltpBenchmark is a modular, extensible and configurable OLTP benchmarking tool. The following is a quick guide to get you started with synthetic data and sample workload mixes. 
 
-= Getting OltpBenchmark from SVN =
+= Getting !OltpBenchmark from SVN =
 
-First of all obtain the source code from the svn repository 
+First of all, obtain the source code from the svn repository 
 {{{
 svn checkout http://oltpbenchmark.googlecode.com/svn/trunk/ oltpbenchmark
 }}}
 
-The next step is to compile OltpBenchmark; we provide an Apache Ant script to automatically build the system from the source code:
+The next step is to compile !OltpBenchmark; we provide an Apache Ant script to automatically build the system from the source code:
 {{{
 Djellel$ ant
 Buildfile: /Users/Djellel/repositories/boltp/build.xml
@@ -32,13 +34,13 @@ Total time: 3 seconds
 
 = Running a Benchmark =
 
-To run OltpBenchmark 2 information are required: 
+To run !OltpBenchmark 2 information are required: 
   * The target benchmark (tpcc, wikipedia .. ect) 
   * The workload descriptor file (samples provided under ./config)
 
 == Benchmarks ==
 
-We provide a utility script (./oltpbenchmark) for running the system and a list of supported benchmarks and options can be obtained using the --help option:
+A utility script (./oltpbenchmark) is provided for running the system. The list of supported benchmarks and options can be obtained using the --help option:
 
 {{{
 Djellel$ ./oltpbenchmark --help
@@ -66,10 +68,10 @@ The following command for example initiate a synthetic wikipedia database (--cre
 
 == Workload descriptor ==
 
-OltpBenchmark uses a configuration file to drive a given benchmark. The workload descriptor (or configuration file) provide the general information to access the database (driver, URL, credential .. etc), benchmark specific options and most importantly the workload mix.
+!OltpBenchmark uses a configuration file to drive a given benchmark. The workload descriptor (or configuration file) provides the general information to access the database (driver, URL, credential .. etc), benchmark specific options and most importantly, the workload mix.
 
-When running a multi-phase experiment with varying a workload, one should provide multiple _<work>_ sections with their duration, rate, and the weight of each transaction. Note: weights have to sum up to 100%.
-The transactions are listed in the benchmark specific section _<transactiontypes>_. The order in which the transactions are declared is the same as their respective weights.
+When running a multi-phase experiment with varying a workload, one should provide multiple <work> sections with their duration, rate, and the weight of each transaction. Note: weights have to sum up to 100%.
+The transactions are listed in the benchmark specific section <transactiontypes>. The order in which the transactions are declared is the same as their respective weights.
 
 *Example*
 The following is an example of a wikipedia configuration file.
@@ -136,7 +138,7 @@ transaction type (index in config file), start time (microseconds),latency (micr
 4,1323686190.075342,1904
 }}}
 
-To obtain transaction per second count, you can aggregate the results into windows using -s option. The throughput and different latency measures in milliseconds are reported:
+To obtain transaction per second count, you can aggregate the results into windows using the -s option. The throughput and different latency measures in milliseconds are reported:
 {{{
 time (seconds),throughput (requests/s),average,min,25th,median,75th,90th,95th,99th,max
 0,200.200,1.183,0.585,0.945,1.090,1.266,1.516,1.715,2.316,12.656
