@@ -31,7 +31,7 @@ BUILD SUCCESSFUL
 Total time: 3 seconds
 }}}
 
-To run wikipedia with the three steps (create, load):
+To initiate a wikipedia database use: -create -load options:
 {{{
 ./oltpbenchmark -b wikipedia -c config/sample_wiki_config.xml -create -load
 }}}
