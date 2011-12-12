@@ -1,0 +1,37 @@
+#summary One-sentence summary of this page.
+
+= Introduction =
+
+Add your content here.
+
+= Getting OltpBenchmark from SVN =
+
+First obtain the source code from the svn repository 
+{{{
+svn checkout http://oltpbenchmark.googlecode.com/svn/trunk/ oltpbenchmark-read-only
+}}}
+
+The next step is to compile OltpBenchmark, we provide an Apache Ant script to automatically build the package:
+{{{
+diufmac39:boltp Djellel$ ant
+Buildfile: /Users/Djellel/repositories/boltp/build.xml
+
+build:
+     [echo] benchmark: /Users/Djellel/repositories/boltp/build.xml
+    [mkdir] Created dir: /Users/Djellel/repositories/boltp/build/META-INF
+     [copy] Copying 1 file to /Users/Djellel/repositories/boltp/build/META-INF
+    [javac] Compiling 150 source files to /Users/Djellel/repositories/boltp/build
+    [javac] Note: Some input files use or override a deprecated API.
+    [javac] Note: Recompile with -Xlint:deprecation for details.
+    [javac] Note: Some input files use unchecked or unsafe operations.
+    [javac] Note: Recompile with -Xlint:unchecked for details.
+     [copy] Copying 8 files to /Users/Djellel/repositories/boltp/build
+
+BUILD SUCCESSFUL
+Total time: 3 seconds
+}}}
+
+To run wikipedia with the three steps (create, load, execute):
+{{{
+./oltpbenchmark -b wikipedia -c config/sample_wiki_config.xml -create -load -execute -s 5
+}}}
