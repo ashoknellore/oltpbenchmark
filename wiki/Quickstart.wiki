@@ -1,6 +1,4 @@
 #labels Gettingstarted
- * [Introduction]
-
 = Introduction =
 
 OltpBenchmark is a modular, extensible and configurable OLTP benchmarking tool. The following is a quick guide to get you started with synthetic data and sample workload mixes. 
