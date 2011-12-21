@@ -32,6 +32,19 @@ BUILD SUCCESSFUL
 Total time: 3 seconds
 }}}
 
+= Preparing the database =
+If you start from scratch, you should create an empty database (e.g., for wikipedia you can create a db named *wiki*) and provide login credential to the benchmark, by modifying  *the workload descriptor file*. The ./config directory provides several examples, we now use the sample_wiki_config.xml. You should edit the following portion:
+
+{{{
+    <driver>com.mysql.jdbc.Driver</driver>
+    <DBUrl>jdbc:mysql://127.0.0.1:3306/wiki</DBUrl>
+    <DBName>wiki</DBName>
+    <username>myuser</username>
+    <password>mypassword</password>
+}}}
+
+This example is for a locally (127.0.0.1) mysql answering on port 3306. Once you tested that the machine on which you run the benchmark can communicate to the DBMS using this credentials you can proceed to the next step.
+
 = Running a Benchmark =
 
 A utility script (./oltpbenchmark) is provided for running the system.
