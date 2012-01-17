@@ -1,5 +1,5 @@
 #labels Featured,publications
-In this page we list papers that have used the oltpbenchmark framework (or some earlier version of it).
+In this page we list papers that have used the oltpbenchmark framework (or some prehistoric version of it).
 
  * Carlo Curino, Yang Zhang, Evan P. C. Jones, Samuel Madden: Schism: a Workload-Driven Approach to Database Replication and Partitioning. PVLDB 3(1): 48-57 (2010)
  * Carlo Curino, Evan P. C. Jones, Raluca A. Popa, Nirmesh Malviya, Eugene Wu, Samuel Madden, Hari Balakrishnan, Nickolai Zeldovich: Relational Cloud: a Database Service for the cloud. CIDR 2011: 235-240
