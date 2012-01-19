@@ -36,6 +36,7 @@ Total time: 3 seconds
 If you start from scratch, you should create an empty database (e.g., for wikipedia you can create a db named *wiki*) and provide login credential to the benchmark, by modifying  *the workload descriptor file*. The ./config directory provides several examples, we now use the sample_wiki_config.xml. You should edit the following portion:
 
 {{{
+    <dbtype>mysql</dbtype>
     <driver>com.mysql.jdbc.Driver</driver>
     <DBUrl>jdbc:mysql://127.0.0.1:3306/wiki</DBUrl>
     <DBName>wiki</DBName>
@@ -75,9 +76,9 @@ usage: oltpbenchmark
 About every implemented benchmark comes with a data generator that creates and loads the target database with synthetic data that mimics, to the best, real world datasets.
 
 *Example*
-The following command for example initiate a synthetic wikipedia database (--create --load) and a then run a workload as described in config/sample_wiki_config.xml file. The results (latency, throughput) are summarized into 5seconds buckets (-s 5) and the output is written into out.txt (-o out.txt):
+The following command for example initiate a synthetic wikipedia database (--create --load) and a then run a workload as described in config/sample_wiki_config.xml file. The results (latency, throughput) are summarized into 5seconds buckets (-s 5) and the output is written into two file: outputfile.res (aggregated) and outputfile.raw (detailed):
 {{{
-./oltpbenchmark -b wikipedia -c config/sample_wiki_config.xml --create --load --execute -s 5 -o out.txt
+./oltpbenchmark -b wikipedia -c config/sample_wiki_config.xml --create=true --load=true --execute -s 5 -o outputfile
 }}}
 
 == Workload descriptor ==
@@ -94,6 +95,7 @@ The following is an example of a wikipedia configuration file.
 <parameters>
    
     <!-- General Workload configuration -->
+    <dbtype>mysql</mysql>
     <driver>com.mysql.jdbc.Driver</driver>
     <DBUrl>jdbc:mysql://127.0.0.1:3306/wiki</DBUrl>
     <DBName>wiki</DBName>
@@ -160,14 +162,14 @@ time (seconds),throughput (requests/s),average,min,25th,median,75th,90th,95th,99
 10,200.000,0.984,0.550,0.796,0.909,1.029,1.191,1.357,2.024,35.835
 }}}
 
-Using the -o file.out option one can dump the output into a file.
+Using the -o file option one can dump the output into *.res and *.raw files.
 
 == Example ==
 
 Finally, bellow is the output of running the wikipedia benchmark with the above descriptor (the database being pre-exisiting).
 
 {{{
-Djellel$./oltpbenchmark -b wikipedia -c config/sample_wiki_config.xml --execute -s 5
+Djellel$./oltpbenchmark -b wikipedia -c config/sample_wiki_config.xml --execute=true -s 5
 **********************************************************************************
 [INIT] Configuration file: config/sample_wiki_config.xml
 [INIT] Driver = com.mysql.jdbc.Driver
