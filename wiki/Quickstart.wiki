@@ -33,15 +33,14 @@ Total time: 3 seconds
 }}}
 
 = Preparing the database =
-If you start from scratch, you should create an empty database (e.g., for wikipedia you can create a db named *wiki*) and provide login credential to the benchmark, by modifying  *the workload descriptor file*. The ./config directory provides several examples, we now use the sample_wiki_config.xml. You should edit the following portion:
+If you start from scratch, you should create an empty database (e.g., for TPC-C you can create a db named *tpcc*) and provide login credential to the benchmark, by modifying  *the workload descriptor file*. The ./config directory provides several examples, we now use the sample_tpcc_config.xml. You should edit the following portion:
 
 {{{
     <dbtype>mysql</dbtype>
     <driver>com.mysql.jdbc.Driver</driver>
-    <DBUrl>jdbc:mysql://127.0.0.1:3306/wiki</DBUrl>
-    <DBName>wiki</DBName>
-    <username>myuser</username>
-    <password>mypassword</password>
+    <DBUrl>jdbc:mysql://127.0.0.1:3306/tpcc</DBUrl>
+    <username>user</username>
+    <password>password</password>
 }}}
 
 This example is for a locally (127.0.0.1) mysql answering on port 3306. Once you tested that the machine on which you run the benchmark can communicate to the DBMS using this credentials you can proceed to the next step.
@@ -60,25 +59,32 @@ The list of supported benchmarks and options can be obtained using the --help op
 {{{
 Djellel$ ./oltpbenchmark --help
 usage: oltpbenchmark
- -b,--bench <arg>    [required] Benchmark class. Currently supported:
-                     [tpcc, tatp, wikipedia, resourcestresser, twitter,
-                     epinions, ycsb, jpab]
- -c,--config <arg>   [required] Workload configuration file
-    --create         Initialize the database for this benchmark
-    --execute        Execute the benchmark workload
- -h,--help           Print this help
-    --load           Load data using the benchmarks data loader
- -o,--output <arg>   Output file (default System.out)
- -s,--sample <arg>   Sampling window
- -v,--verbose        Display Messages
+ -b,--bench <arg>             [required] Benchmark class. Currently
+                              supported: [tpcc, tatp, wikipedia,
+                              resourcestresser, twitter, epinions, ycsb,
+                              jpab, seats, auctionmark]
+ -c,--config <arg>            [required] Workload configuration file
+    --clear <arg>             Clear all records in the database for this
+                              benchmark
+    --create <arg>            Initialize the database for this benchmark
+    --dialects-export <arg>   Export benchmark SQL to a dialects file
+    --execute <arg>           Execute the benchmark workload
+ -h,--help                    Print this help
+    --histograms              Print txn histograms
+    --load <arg>              Load data using the benchmark's data loader
+ -o,--output <arg>            Output file (default System.out)
+    --runscript <arg>         Run an SQL script
+ -s,--sample <arg>            Sampling window
+ -v,--verbose                 Display Messages
+
 }}}
 
 About every implemented benchmark comes with a data generator that creates and loads the target database with synthetic data that mimics, to the best, real world datasets.
 
 *Example*
-The following command for example initiate a synthetic wikipedia database (--create --load) and a then run a workload as described in config/sample_wiki_config.xml file. The results (latency, throughput) are summarized into 5seconds buckets (-s 5) and the output is written into two file: outputfile.res (aggregated) and outputfile.raw (detailed):
+The following command for example initiate a tpcc database (--create=true --load=true) and a then run a workload as described in config/sample_tpcc_config.xml file. The results (latency, throughput) are summarized into 5seconds buckets (-s 5) and the output is written into two file: outputfile.res (aggregated) and outputfile.raw (detailed):
 {{{
-./oltpbenchmark -b wikipedia -c config/sample_wiki_config.xml --create=true --load=true --execute -s 5 -o outputfile
+./oltpbenchmark -b tpcc -c config/sample_tpcc_config.xml --create=true --load=true --execute=true -s 5 -o outputfile
 }}}
 
 == Workload descriptor ==
@@ -89,53 +95,50 @@ When running a multi-phase experiment with varying a workload, one should provid
 The transactions are listed in the benchmark specific section <transactiontypes>. The order in which the transactions are declared is the same as their respective weights.
 
 *Example*
-The following is an example of a wikipedia configuration file.
+The following is an example of a TPCC configuration file.
 {{{
 <?xml version="1.0"?>
 <parameters>
-   
-    <!-- General Workload configuration -->
-    <dbtype>mysql</mysql>
+	
+    <!-- Connection details -->
+    <dbtype>mysql</dbtype>
     <driver>com.mysql.jdbc.Driver</driver>
-    <DBUrl>jdbc:mysql://127.0.0.1:3306/wiki</DBUrl>
-    <DBName>wiki</DBName>
-    <username>wiki</username>
-    <password>wikipass</password>
-    <terminals>10</terminals>
-
+    <DBUrl>jdbc:mysql://server:3306/ycsb</DBUrl>
+    <username>user</username>
+    <password>password</password>
+    <isolation>TRANSACTION_SERIALIZABLE</isolation>
+    
+    <!-- Scale factor is the number of warehouses in TPCC -->
+    <scalefactor>32</scalefactor>
+    
+    <!-- The workload -->
+    <terminals>200</terminals>
     <works>
         <work>
-          <time>10</time>
-          <rate>200</rate>
-          <weights>0.07,0.07,7.6725,91.2656,0.9219</weights>
+          <time>300</time>
+          <rate>10000</rate>
+          <weights>45,43,4,4,4</weights>
         </work>
-        <work>
-          <time>5</time>
-          <rate>200</rate>
-          <weights>0.07,0.07,7.6725,91.2656,0.9219</weights>
-        </work>
-    </works>
-    
-    <!-- Wikipedia specific -->
-    <tracefile>config/traces/longtrace_1k.txt</tracefile>
-    <base_ip>10.1.</base_ip>
-    <transactiontypes>
-        <transactiontype>
-                <name>AddWatchList</name>
-        </transactiontype>
-        <transactiontype>
-                <name>RemoveWatchList</name>
-        </transactiontype>
-        <transactiontype>
-                <name>UpdatePage</name>
-        </transactiontype>
-        <transactiontype>
-                <name>GetPageAnonymous</name>
-        </transactiontype>
-        <transactiontype>
-                <name>GetPageAuthenticated</name>
-        </transactiontype>
-    </transactiontypes>
+	</works>
+	
+	<!-- TPCC specific -->  
+   	<transactiontypes>
+    	<transactiontype>
+    		<name>NewOrder</name>
+    	</transactiontype>
+    	<transactiontype>
+    		<name>Payment</name>
+    	</transactiontype>
+    	<transactiontype>
+    		<name>OrderStatus</name>
+    	</transactiontype>
+    	<transactiontype>
+    		<name>Delivery</name>
+    	</transactiontype>
+    	<transactiontype>
+    		<name>StockLevel</name>
+    	</transactiontype>
+   	</transactiontypes>	
 </parameters>
 }}}
 
@@ -154,7 +157,7 @@ transaction type (index in config file), start time (microseconds),latency (micr
 4,1323686190.075342,1904
 }}}
 
-To obtain transaction per second count, you can aggregate the results into windows using the -s option. The throughput and different latency measures in milliseconds are reported:
+To obtain transaction per second (TPs), you can aggregate the results into windows using the -s 1 option. The throughput and different latency measures in milliseconds are reported:
 {{{
 time (seconds),throughput (requests/s),average,min,25th,median,75th,90th,95th,99th,max
 0,200.200,1.183,0.585,0.945,1.090,1.266,1.516,1.715,2.316,12.656
@@ -163,29 +166,3 @@ time (seconds),throughput (requests/s),average,min,25th,median,75th,90th,95th,99
 }}}
 
 Using the -o file option one can dump the output into *.res and *.raw files.
-
-== Example ==
-
-Finally, bellow is the output of running the wikipedia benchmark with the above descriptor (the database being pre-exisiting).
-
-{{{
-Djellel$./oltpbenchmark -b wikipedia -c config/sample_wiki_config.xml --execute=true -s 5
-**********************************************************************************
-[INIT] Configuration file: config/sample_wiki_config.xml
-[INIT] Driver = com.mysql.jdbc.Driver
-[INIT] DB = jdbc:mysql://127.0.0.1:3306/wiki
-[INIT] Isolation mode = **Not Specified**
-[INIT] No dialect provided
-[INIT] Benchmark: wikipedia {Class: com.oltpbenchmark.benchmarks.wikipedia.WikipediaBenchmark}
-**********************************************************************************
-11:41:03,364 [main] (DBWorkload.java:262) INFO  - Launching the wikipedia Benchmark with 2 Phases...
-[Starting Phase] [Time= 10] [Rate= 200] [Ratios= [0.07, 0.07, 7.6725, 91.2656, 0.9219]]
-[Starting Phase] [Time= 5] [Rate= 200] [Ratios= [0.07, 0.07, 7.6725, 91.2656, 0.9219]]
-**********************************************************************************
-Rate limited reqs/s: Results(nanoSeconds=15000378000, measuredRequests=4499) = 299.9257752037982 requests/sec
-**********************************************************************************
-[Results] Grouped into Buckets of 5 seconds
-time (seconds),throughput (requests/s),average,min,25th,median,75th,90th,95th,99th,max
-0,200.200,1.183,0.585,0.945,1.090,1.266,1.516,1.715,2.316,12.656
-5,199.800,0.994,0.575,0.831,0.964,1.071,1.209,1.424,2.223,2.657
-10,200.000,0.984,0.550,0.796,0.909,1.029,1.191,1.357,2.024,35.835
