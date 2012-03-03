@@ -87,6 +87,16 @@ The following command for example initiate a tpcc database (--create=true --load
 ./oltpbenchmark -b tpcc -c config/sample_tpcc_config.xml --create=true --load=true --execute=true -s 5 -o outputfile
 }}}
 
+Since data loading can be a lengthy process, one would first create a and populate a database which can be reused for multiple experiments:
+{{{
+./oltpbenchmark -b tpcc -c config/sample_tpcc_config.xml --create=true --load=true
+}}}
+
+Then running an experiment could be simply done with the following command on a fresh or used database.
+{{{
+./oltpbenchmark -b tpcc -c config/sample_tpcc_config.xml --execute=true -s 5 -o outputfile
+}}}
+
 == Workload descriptor ==
 
 !OltpBenchmark uses a configuration file to drive a given benchmark. The workload descriptor (or configuration file) provides the general information to access the database (driver, URL, credential .. etc), benchmark specific options and most importantly, the workload mix.
